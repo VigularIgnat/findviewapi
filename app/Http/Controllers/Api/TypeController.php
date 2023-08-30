@@ -37,12 +37,14 @@ class TypeController extends Controller
                 'user_id'=>$request->user()->id
             ]);
             return response()->json([
+                'success'=>true,
                 'message'=>'Type successfully created',
                 'type'=>$type
             ]);
         }
         else{
             return response()->json([
+                'success'=>false,
                 'message'=>"You're not authentificated",
             ]);
         }
@@ -73,12 +75,14 @@ class TypeController extends Controller
             $type->name=$request->name;
             $type->update();
             return response()->json([
+                'success'=>true,
                 'message'=>'Type successfully updated',
                 'type'=>$type
             ]);
         }
         else{
             return response()->json([
+                'success'=>false,
                 'message'=>"You're not authentificated",
             ]);
         }
