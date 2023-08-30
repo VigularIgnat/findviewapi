@@ -34,7 +34,7 @@ class TypeController extends Controller
             
             $type=Type::create([
                 'name'=>$request->name,
-                'id_user'=>$request->user()->id
+                'user_id'=>$request->user()->id
             ]);
             return response()->json([
                 'message'=>'Type successfully created',
