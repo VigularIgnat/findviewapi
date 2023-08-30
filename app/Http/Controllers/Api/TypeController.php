@@ -6,6 +6,10 @@ use App\Models\Type;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use App\Helpers\StatusClass;
+
+use App\Http\Resources\StatusResource;
+
 class TypeController extends Controller
 {
     /**
@@ -13,7 +17,7 @@ class TypeController extends Controller
      */
     public function index()
     {
-        $types_arr=Type::all();
+        $types_arr=Type::all()->select('name','id');
         return response()->json($types_arr);
     }
 
@@ -36,11 +40,14 @@ class TypeController extends Controller
                 'name'=>$request->name,
                 'user_id'=>$request->user()->id
             ]);
-            return response()->json([
-                'success'=>true,
-                'message'=>'Type successfully created',
-                'type'=>$type
-            ]);
+            $answer=new StatusClass;
+
+            $answer->success=true;
+            $answer->element_name='type';
+            $answer->element=$type;
+            
+
+            return StatusResource::make($answer);
         }
         else{
             return response()->json([

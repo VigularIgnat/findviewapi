@@ -36,10 +36,7 @@ class IndexDataController extends Controller
                     ->orwhere('cities.name', 'like', '%'.$letter.'%')
                     ->select('cities.id as city_id','countries.name as country_name','cities.name as city_name')
                     ->get();
-                    //return response()->json(app('currency_service')->updatecourse());
-                    
-                    return response()->json($result);
-                    //return IndexDataResource::make($result);
+                    return IndexDataResource::collection($result);
                 }
             }
             
