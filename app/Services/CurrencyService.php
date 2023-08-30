@@ -48,6 +48,8 @@ class CurrencyService{
                     }
                 }
             }
+            $currencies_arr=Currency::all();
+            return response()->json($currencies_arr);
             //dd($array_courses);
             //return response()->json($data_course);
             //https://api.currencyapi.com/v3/latest?apikey=cur_live_81BYHyLjG95GhLsgqRtkRcJZ7UclRdRagHC51NAw&currencies=PLN%2CUAH%2CEUR%2CUSD%2CCZK%2CDKK
