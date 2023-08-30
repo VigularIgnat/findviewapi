@@ -21,7 +21,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::prefix('data')->group(function () {
+Route::prefix('v1')->group(function () {
     Route::get('city/hash/{hash}/{letter}',[IndexDataController::class,'index'])->where(['hash' => '[A-Za-z0-9]+','letter' => '[A-Za-z]+']);
     Route::middleware('auth:sanctum')->group(function () {
         Route::get('/type', [TypeController::class,'index']);
