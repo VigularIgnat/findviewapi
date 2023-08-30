@@ -17,4 +17,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/course', function () {
+    return app('currency_service')->updatecourse();
+});
+
 require __DIR__.'/auth.php';
