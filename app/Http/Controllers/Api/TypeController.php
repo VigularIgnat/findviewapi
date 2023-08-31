@@ -69,8 +69,9 @@ class TypeController extends Controller
     {
         $answer=new StatusClass;
         $answer->success=false;
+        return response()->json($type);
         if($request->user()!=NULL&& $type->user_id=$request->user()->id){
-            return response()->json($type);
+            
             $validator = Validator::make($request->all(), [
                 'name' => 'required|string|max:255|unique:types',
                 'type_id'=>'required|',
