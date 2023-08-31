@@ -84,12 +84,15 @@ class TypeController extends Controller
             if($type_el_exists){
                 
                 $type_el=Type::where('id',$request->type_id)->first();
+                if($type_el->user_id==$request->user()->id){
+                    $type_el->name=$request->name;
+                    $type_el->save();
+    
+                    $answer->success=true;
+                    $answer->message='Type successfully updated';
+                }
               //  return response()->json($request->name);
-                $type_el->name=$request->name;
-                $type_el->save();
-
-                $answer->success=true;
-                $answer->message='Type successfully updated';
+               
             }
             
 
