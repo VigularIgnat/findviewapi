@@ -109,21 +109,25 @@ class TypeController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Request $request,Type $type)
+    public function destroy(Request $request,$id)
     {
         $answer=new StatusClass;
-        if($request->user()!=NULL&& $type->user_id==$request->user()->id){
+        if($request->user()!=NULL){
+            $type_el_exists=Type::where('id',$id)->exists();
+            if($type_el_exists){
+                $type_el=Type::where('id',$id)->first();
+                if(app('check_access')->checkDelete($type,'type',$request->user())){
+                    
+                    $type->delete();
+                    $answer->success=true;
+                    $answer->message='Type successfully deleted';
+                }
+                else{
+                    
+                    $answer->message='Type is unavailable to delete';
+                }
+            }
             
-            if(app('check_access')->checkDelete($type,'type',$request->user())){
-
-                $type->delete();
-                $answer->success=true;
-                $answer->message='Type successfully deleted';
-            }
-            else{
-                
-                $answer->message='Type is unavailable to delete';
-            }
         }
         else{
             $answer->message="You're not authentificated";
