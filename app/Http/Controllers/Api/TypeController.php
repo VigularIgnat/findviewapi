@@ -84,7 +84,7 @@ class TypeController extends Controller
             if($type_el_exists){
                 
                 $type_el=Type::where('id',$request->type_id)->get();
-                return response()->json($type_el);
+                //return response()->json($type_el);
                 $type_el->name=$request->name;
                 $type_el->update();
                 $answer->success=true;
