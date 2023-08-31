@@ -65,7 +65,7 @@ class TypeController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request)
+    public function update(Request $request, Type $type)
     {
         $answer=new StatusClass;
         $answer->success=false;
