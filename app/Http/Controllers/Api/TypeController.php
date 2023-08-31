@@ -116,7 +116,7 @@ class TypeController extends Controller
             $type_el_exists=Type::where('id',$id)->exists();
             if($type_el_exists){
                 $type_el=Type::where('id',$id)->first();
-                if(app('check_access')->checkDelete($type,'type',$request->user())){
+                if(app('check_access')->checkDelete($type_el,'type',$request->user())){
                     
                     $type->delete();
                     $answer->success=true;
