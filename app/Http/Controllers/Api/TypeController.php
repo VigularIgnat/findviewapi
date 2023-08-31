@@ -118,7 +118,7 @@ class TypeController extends Controller
                 $type_el=Type::where('id',$id)->first();
                 if(app('check_access')->checkDelete($type_el,'type',$request->user())){
                     
-                    $type->delete();
+                    $type_el->delete();
                     $answer->success=true;
                     $answer->message='Type successfully deleted';
                 }
