@@ -30,7 +30,7 @@ Route::prefix('v1')->group(function () {
         Route::post('/type', [TypeController::class,'store']);
         Route::put('/type',[TypeController::class,'update']);
         Route::delete('/types/{id}',[TypeController::class,'destroy'] );
-        Route::post('/country', [CountryController::class,'create']);
+        Route::post('/country/check', [CountryController::class,'create']);
 
     });
 });
