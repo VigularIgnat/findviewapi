@@ -23,8 +23,9 @@ class SetCurrency extends Command
     /**
      * Execute the console command.
      */
-    public function handle($currencyservice)
+    public function handle()
     {
-        $currencyservice->updatecourse();
+        app('currency_service')->updatecourse();
+        $this->info("Email sent");
     }
 }
