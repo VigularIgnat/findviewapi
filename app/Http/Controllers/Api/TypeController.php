@@ -86,7 +86,7 @@ class TypeController extends Controller
                 $type_el=Type::where('id',$request->type_id)->get();
                 //return response()->json($type_el);
                 $type_el->name=$request->name;
-                $type_el->update();
+                $type_el->save();
                 $answer->success=true;
                 $answer->message='Type successfully updated';
             }
