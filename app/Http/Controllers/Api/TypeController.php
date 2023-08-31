@@ -65,26 +65,32 @@ class TypeController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Type $type)
+    public function update(Request $request)
     {
         $answer=new StatusClass;
         $answer->success=false;
-        return response()->json($type);
+        
         if($request->user()!=NULL&& $type->user_id=$request->user()->id){
             
             $validator = Validator::make($request->all(), [
                 'name' => 'required|string|max:255|unique:types',
                 'type_id'=>'required|',
             ]);
-            
+            $type_el_exists=Type::where('id',$request->type_id)->exists();
+
             if ($validator->fails()) {
                 return response()->json(['errors' => $validator->errors()], 422);
             }
+            if($type_el_exists){
+                
+                $type_el=Type::where('id',$request->type_id)->get();
+                return response()->json($type_el);
+                $type_el->name=$request->name;
+                $type_el->update();
+                $answer->success=true;
+                $answer->message='Type successfully updated';
+            }
             
-            $type->name=$request->name;
-            $type->update();
-            $answer->success=true;
-            $answer->message='Type successfully updated';
 
         }
         else{
