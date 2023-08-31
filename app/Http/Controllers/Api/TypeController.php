@@ -6,7 +6,7 @@ use App\Models\Type;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use App\Helpers\StatusClass;
+use App\Services\StatusClass;
 
 use App\Http\Resources\StatusResource;
 
@@ -17,7 +17,7 @@ class TypeController extends Controller
      */
     public function index()
     {
-        $types_arr=Type::all()->select('name','id');
+        $types_arr=Type::select('name','id')->get();
         return response()->json($types_arr);
     }
 
@@ -26,6 +26,8 @@ class TypeController extends Controller
      */
     public function store(Request $request)
     {
+        $answer=new StatusClass;
+        $answer->success=false;
         if($request->user()!=NULL){
             $validator = Validator::make($request->all(), [
                 'name' => 'required|string|max:255|unique:types',
@@ -44,18 +46,15 @@ class TypeController extends Controller
 
             $answer->success=true;
             $answer->element_name='type';
-            $answer->element=$type;
+            $answer->message='Type successfully added';
             
-
-            return StatusResource::make($answer);
+            
+            
         }
         else{
-            return response()->json([
-                'success'=>false,
-                'message'=>"You're not authentificated",
-            ]);
+            $answer->message="You're not authentificated"; 
         }
-        
+        return StatusResource::make($answer);
     }
 
     /**
@@ -68,6 +67,8 @@ class TypeController extends Controller
      */
     public function update(Request $request, Type $type)
     {
+        $answer=new StatusClass;
+        $answer->success=false;
         if($request->user()!=NULL&& $type->user_id=$request->user()->id){
             
             $validator = Validator::make($request->all(), [
@@ -81,18 +82,14 @@ class TypeController extends Controller
             
             $type->name=$request->name;
             $type->update();
-            return response()->json([
-                'success'=>true,
-                'message'=>'Type successfully updated',
-                'type'=>$type
-            ]);
+            $answer->success=true;
+            $answer->message='Type successfully updated';
+
         }
         else{
-            return response()->json([
-                'success'=>false,
-                'message'=>"You're not authentificated",
-            ]);
+            $answer->message="You're not authentificated"; 
         }
+        return StatusResource::make($answer);
     }
 
     /**
@@ -100,30 +97,26 @@ class TypeController extends Controller
      */
     public function destroy(Request $request,Type $type)
     {
+        $answer=new StatusClass;
         if($request->user()!=NULL&& $type->user_id=$request->user()->id){
             
             if(app('check_access')->checkDelete($type,'type',$request->user())){
 
                 $type->delete();
-                return response()->json([
-                    'success'=>true,
-                    'message'=>'Type successfully deleted',
-                    
-                ]);
+                $answer->success=true;
+                $answer->message='Type successfully deleted';
             }
             else{
-                return response()->json([
-                    'success'=>false,
-                    'message'=>"Type wasn't deleted",
-
-                ]);
+                
+                $answer->message='Type is unavailable to delete';
             }
         }
         else{
-            return response()->json([
-                'success'=>false,
-                'message'=>"You're not authentificated",
-            ]);
-        }
+            $answer->message="You're not authentificated";
+
+        };
+        return StatusResource::make($answer);
     }
+
+    
 }

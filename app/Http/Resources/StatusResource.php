@@ -14,15 +14,12 @@ class StatusResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        $element;
-        if($request->element!=NULL){
-            $element=$this->element;
-            $element_name=$this->element_name;
+        if($this->element!=NULL){
             return [
                 'success' => $this->success,
                 'message' => $this->message,
-                $element_name=>$this->element
-                
+                'element'=>$this->element_name,
+                'user'=>$this->element
             ];
         }
         else{

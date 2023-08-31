@@ -43,8 +43,6 @@ class CheckService{
         return $access;
     }
 
-    public function checkUpdate($el){
-
-    }
+    
 
 }

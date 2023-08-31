@@ -16,8 +16,8 @@ class IndexDataResource extends JsonResource
     {
         return [
             'city_id' => $this->city_id,
-            'city_name' => $this->city,
-            'country_name'=>$this->country,
+            'city_name' => $this->city_name,
+            'country_name'=>$this->country_name,
         ];
     }
 }
