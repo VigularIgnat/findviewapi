@@ -98,7 +98,7 @@ class TypeController extends Controller
     public function destroy(Request $request,Type $type)
     {
         $answer=new StatusClass;
-        if($request->user()!=NULL&& $type->user_id=$request->user()->id){
+        if($request->user()!=NULL&& $type->user_id==$request->user()->id){
             
             if(app('check_access')->checkDelete($type,'type',$request->user())){
 

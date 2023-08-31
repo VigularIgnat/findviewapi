@@ -33,12 +33,7 @@ class AuthController extends Controller
         $credentials = $request->only('email', 'password');
         if (Auth::attempt($credentials)) {
             $user = Auth::user();
-            //app('user')->setuser($user);
-            //$request->session()->put('user', $user);
-            Cache::put('user', $user, 14400); 
-            //$user2=app('user')->getuser();
-        
-            //$request->session()->regenerate();
+
             return response()->json([
                 'user' => $user,
                 
@@ -82,6 +77,7 @@ class AuthController extends Controller
             $hash_create=app('hash_controller')->gethash($user);
             if($hash_create['success']){
                 return response()->json([
+                    'success'=>true,
                     'message' => 'User created successfully, keep this hash',
                     'user' => $user,
                     'hash'=>$hash_create,
@@ -90,15 +86,16 @@ class AuthController extends Controller
             }
             else{
                 return response()->json([
+                    'success'=>true,
                     'message' => 'User created successfully',
                     'user' => $user,
-                    
                 ]);
             }
             
         }
         else{
             return response()->json([
+                'success'=>true,
                 'message' => 'User created successfully',
                 'user' => $user,
                 
@@ -111,6 +108,7 @@ class AuthController extends Controller
     {
         Auth::user()->tokens()->delete();
         return response()->json([
+            'success'=>true,
             'message' => 'Successfully logged out',
         ]);
     }
@@ -118,6 +116,7 @@ class AuthController extends Controller
     public function refresh()
     {
         return response()->json([
+            'success'=>true,
             'user' => Auth::user(),
             'authorisation' => [
                 'token' => Auth::refresh(),
