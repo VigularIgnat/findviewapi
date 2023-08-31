@@ -91,6 +91,9 @@ class TypeController extends Controller
                     $answer->success=true;
                     $answer->message='Type successfully updated';
                 }
+                else{
+                    $answer->message="No permissions"; 
+                }
               //  return response()->json($request->name);
                
             }
