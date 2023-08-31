@@ -84,7 +84,7 @@ class TypeController extends Controller
             if($type_el_exists){
                 
                 $type_el=Type::where('id',$request->type_id)->first();
-                return response()->json($request->name);
+              //  return response()->json($request->name);
                 $type_el->name=$request->name;
                 $type_el->save();
 
