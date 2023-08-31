@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\HashController;
 use App\Http\Controllers\Api\TypeController;
 use App\Http\Controllers\Api\CountryController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -29,7 +30,8 @@ Route::prefix('v1')->group(function () {
         Route::post('/type', [TypeController::class,'store']);
         Route::put('/type',[TypeController::class,'update']);
         Route::delete('/types/{id}',[TypeController::class,'destroy'] );
-        Route::post('/country', [TypeController::class,'store']);
+        Route::post('/country', [CountryController::class,'create']);
+
     });
 });
 

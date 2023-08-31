@@ -1,12 +1,14 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
 use App\Models\Country;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreCountryRequest;
 use App\Http\Requests\UpdateCountryRequest;
-
+use App\Services\CountryService;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 class CountryController extends Controller
 {
     /**
@@ -20,9 +22,20 @@ class CountryController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        if($request->user()!=NULL){
+            $validator = Validator::make($request->all(), [
+                'name' => 'required|string|max:255|unique:countries',
+                
+            ]);
+            
+            if ($validator->fails()) {
+                return response()->json(['errors' => $validator->errors()], 422);
+            }
+            $countryModel=new CountryService;
+            return $countryModel->getcountry($request->name);
+        }
     }
 
     /**
@@ -30,7 +43,14 @@ class CountryController extends Controller
      */
     public function store(StoreCountryRequest $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:255|unique:countries',
+            
+        ]);
+        
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
     }
 
     /**

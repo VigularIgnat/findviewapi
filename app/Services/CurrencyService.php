@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Carbon;
 
 class CurrencyService{
-    protected $token='';
+    protected $token='cur_live_81BYHyLjG95GhLsgqRtkRcJZ7UclRdRagHC51NAw';
     protected $api_endpoint='https://api.currencyapi.com/v3/latest?apikey=';
     protected $currencies=['PLN', 'UAH','EUR','CZK','DKK','GBP'];
     public function getArray(){
@@ -29,7 +29,7 @@ class CurrencyService{
                 foreach ($data_course as $data_cur) {
                     if($currency==$data_cur['code']){         
                         $currency_el=Currency::where('name',$currency)->first();
-                        
+
                         $currency_el->course=round($data_cur['value'],2);
                         $array_courses[$currency]=round($data_cur['value'],2);
               
@@ -37,7 +37,7 @@ class CurrencyService{
                     }
                 }
             }
-            return $th->getMessage();
+            
         }catch(\Throwable $th){
             $result['error']=$th->getMessage();
         }
